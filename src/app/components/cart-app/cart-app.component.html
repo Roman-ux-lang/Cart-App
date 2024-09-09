@@ -1,0 +1,22 @@
+<app-navbar [items]="items" (openCartEventEmitter)="openCart()"/>
+
+<div class="container my-4">
+    <h2>Product Catalog App!</h2>
+    <div class="row">
+        <div [className]="showCart? 'col-8': 'col'">
+            <app-catalog [products]="products" (productEventEmitter)="onAddCart($event)"/>
+        </div>
+        @if(showCart){
+            <div class="col-4">
+                <button class="btn btn-secondary float-end" (click)="openCart()">Close cart</button>
+                @if (items.length > 0){
+                    <app-cart [items]="items" [total]="total" (idProductEventEmitter)="onDeleteCart($event)"/>
+                }@else {
+                    <div class="alert alert-warning">There are no items in the shopping cart!</div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+

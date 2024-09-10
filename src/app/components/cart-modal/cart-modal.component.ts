@@ -12,15 +12,16 @@ import { CartComponent } from '../cart/cart.component';
 export class CartModalComponent {
 
   @Input() items: CartItem[] = [];
-  @Input() total: number = 0;
-  @Output() openCartEventEmitter = new EventEmitter();
+  // @Input() total: number = 0;
+
+  @Output() closeCartEventEmitter = new EventEmitter();
   @Output() idProductEventEmitter: EventEmitter<number> = new EventEmitter<number>();
 
   onDeleteCart(id: number){
     this.idProductEventEmitter.emit(id);
   }
 
-  openCart(): void {
-    this.openCartEventEmitter.emit();
+  closeCart(): void {
+    this.closeCartEventEmitter.emit();
   }
 }

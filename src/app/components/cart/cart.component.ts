@@ -11,12 +11,11 @@ import { CartItem } from '../../models/cartItem';
 export class CartComponent {
  
   items: CartItem[] = [];
-  total!: number;
+  total: number = 0;
   
   idProductEventEmitter: EventEmitter<number> = new EventEmitter<number>();
  
   onDeleteCart(id: number){
     this.idProductEventEmitter.emit(id);
-
   }
 }

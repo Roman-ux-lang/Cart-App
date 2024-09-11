@@ -2,8 +2,11 @@
 
 <div class="container my-4">
     <h2>Product Catalog App!</h2>
+    <app-catalog
+    [products]="products"
+    (productEventEmitter)="onAddCart($event)"/>
 
-    <app-catalog [products]="products" (productEventEmitter)="onAddCart($event)"/>
+    <router-outlet/>
 </div>
 
 

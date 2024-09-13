@@ -5,6 +5,7 @@ import { CatalogComponent } from '../catalog/catalog.component';
 import { CartItem } from '../../models/cartItem';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { RouterOutlet } from '@angular/router';
+import { SharingDataService } from '../../services/sharing-data.service';
 
 @Component({
   selector: 'cart-app',
@@ -19,44 +20,50 @@ export class CartAppComponent implements OnInit{
   items: CartItem[] = [];
   total: number = 0;
 
-  constructor(private service: ProductService){}
+  constructor(private sharingDataService: SharingDataService, private service: ProductService){}
   
   ngOnInit(): void {
     this.products = this.service.findAll();
     //this.items = JSON.parse(sessionStorage.getItem('cart')!) || [];
     this.items = JSON.parse(sessionStorage.getItem('cart') || '[]');
     this.calculateTotal();
+    this.onDeleteCart();
+    this.onAddCart();
   }
 
-  onAddCart(product: Product){
-    const hasItem = this.items.find(item => {return item.product?.id === product.id});
-
-    if(hasItem){
-      this.items = this.items.map(item => {
-        if(item.product?.id === product.id){
-          return{
-            ...item,
-            quantity: item.quantity + 1
+  onAddCart(){
+    this.sharingDataService.productEventEmitter.subscribe(product =>{
+      const hasItem = this.items.find(item => {return item.product?.id === product.id});
+      if(hasItem){
+        this.items = this.items.map(item => {
+          if(item.product?.id === product.id){
+            return{
+              ...item,
+              quantity: item.quantity + 1
+            }
           }
-        }
-        return item;
-      })
-    }else{ 
-      //this.items = [...this.items, {product, quantity:1}];
-      this.items = [...this.items, {product: {...product}, quantity:1}];
-    }
-    this.calculateTotal();
-    this.saveSession();
+          return item;
+        })
+      }else{ 
+        //this.items = [...this.items, {product, quantity:1}];
+        this.items = [...this.items, {product: {...product}, quantity:1}];
+      }
+      this.calculateTotal();
+      this.saveSession();
+    });
   }
 
-  onDeleteCart(id: number): void{
-    this.items = this.items.filter(item => item.product!.id !== id);
-    if(this.items.length == 0){
-      sessionStorage.removeItem('cart');
-      sessionStorage.clear();
-    }
-    this.calculateTotal();
-    this.saveSession();
+  onDeleteCart(): void{
+    this.sharingDataService.idProductEventEmitter.subscribe(id => {
+      console.log(id + ' se ha ejecutado el evento idProductEventEmitter');
+      this.items = this.items.filter(item => item.product!.id !== id);
+      if(this.items.length == 0){
+        sessionStorage.removeItem('cart');
+        sessionStorage.clear();
+      }
+      this.calculateTotal();
+      this.saveSession();
+    })
   }
 
   calculateTotal(): void {

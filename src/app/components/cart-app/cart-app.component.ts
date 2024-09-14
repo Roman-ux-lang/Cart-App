@@ -10,8 +10,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
   selector: 'cart-app',
   standalone: true,
   imports: [CatalogComponent, CartComponent, NavbarComponent],
-  templateUrl: './cart-app.component.html',
-  styleUrl: './cart-app.component.css'
+  templateUrl: './cart-app.component.html'
 })
 export class CartAppComponent implements OnInit{
 

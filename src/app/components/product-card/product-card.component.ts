@@ -5,8 +5,7 @@ import { Product } from '../../models/product';
   selector: 'div[app-product-card]',
   standalone: true,
   imports: [],
-  templateUrl: './product-card.component.html',
-  styleUrl: './product-card.component.css'
+  templateUrl: './product-card.component.html'
 })
 export class ProductCardComponent {
 

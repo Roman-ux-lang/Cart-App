@@ -6,8 +6,7 @@ import { ProductCardComponent } from '../product-card/product-card.component';
   selector: 'app-catalog',
   standalone: true,
   imports: [ProductCardComponent],
-  templateUrl: './catalog.component.html',
-  styleUrl: './catalog.component.css'
+  templateUrl: './catalog.component.html'
 })
 export class CatalogComponent {
 

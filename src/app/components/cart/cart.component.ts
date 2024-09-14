@@ -5,8 +5,7 @@ import { CartItem } from '../../models/cartItem';
   selector: 'app-cart',
   standalone: true,
   imports: [],
-  templateUrl: './cart.component.html',
-  styleUrl: './cart.component.css'
+  templateUrl: './cart.component.html'
 })
 export class CartComponent {
 
